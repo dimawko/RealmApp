@@ -11,30 +11,39 @@ import RealmSwift
 
 class StorageManager {
     static let shared = StorageManager()
-    let realm = try! Realm()
-    
+
+    var realm: Realm? {
+        do {
+            let realm = try Realm()
+            return realm
+        } catch let error as NSError {
+            print(error)
+        }
+        return nil
+    }
+
     private init() {}
-    
+
     // MARK: - Task List
     func save(_ taskLists: [TaskList]) {
         write {
-            realm.add(taskLists)
+            realm?.add(taskLists)
         }
     }
-    
+
     func save(_ taskList: TaskList) {
         write {
-            realm.add(taskList)
+            realm?.add(taskList)
         }
     }
-    
+
     func delete(_ taskList: TaskList) {
         write {
-            realm.delete(taskList.tasks)
-            realm.delete(taskList)
+            realm?.delete(taskList.tasks)
+            realm?.delete(taskList)
         }
     }
-    
+
     func edit(_ taskList: TaskList, newValue: String) {
         write {
             taskList.name = newValue
@@ -53,10 +62,36 @@ class StorageManager {
             taskList.tasks.append(task)
         }
     }
-    
+
+    func delete(_ task: Task, from taskList: TaskList) {
+        write {
+            guard let index = taskList.tasks.index(of: task) else { return }
+            taskList.tasks.remove(at: index)
+        }
+    }
+
+    func edit(_ task: Task, newValue: String, newNote: String) {
+        write {
+            task.name = newValue
+            task.note = newNote
+        }
+    }
+
+    func done(_ task: Task) {
+        write {
+            task.setValue(true, forKey: "isComplete")
+        }
+    }
+
+    func undone(_ task: Task) {
+        write {
+            task.setValue(false, forKey: "isComplete")
+        }
+    }
+
     private func write(completion: () -> Void) {
         do {
-            try realm.write {
+            try realm?.write {
                 completion()
             }
         } catch {

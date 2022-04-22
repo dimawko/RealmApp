@@ -9,7 +9,7 @@
 import UIKit
 import RealmSwift
 
-private enum SectionName {
+private enum Section {
     static let current = 0
     static let completed = 1
 }
@@ -41,11 +41,11 @@ class TasksViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        section == SectionName.current ? currentTasks.count : completedTasks.count
+        section == Section.current ? currentTasks.count : completedTasks.count
     }
 
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        section == SectionName.current ? "CURRENT TASKS" : "COMPLETED TASKS"
+        section == Section.current ? "CURRENT TASKS" : "COMPLETED TASKS"
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -58,12 +58,16 @@ class TasksViewController: UITableViewController {
         return cell
     }
 
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+
     @objc private func addButtonPressed() {
         showAlert()
     }
-
+    // MARK: - Table view swipe actions
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let task = indexPath.section == SectionName.current
+        let task = indexPath.section == Section.current
         ? currentTasks[indexPath.row]
         : completedTasks[indexPath.row]
 
@@ -83,22 +87,20 @@ class TasksViewController: UITableViewController {
         let doneAction = UIContextualAction(style: .normal, title: "Done") { _, _, isDone in
             StorageManager.shared.done(task)
             let rowIndex = IndexPath(
-                row: self.completedTasks.index(of: task) ?? SectionName.current,
-                section: SectionName.completed
+                row: self.completedTasks.index(of: task) ?? Section.current,
+                section: Section.completed
             )
             tableView.moveRow(at: indexPath, to: rowIndex)
-
             isDone(true)
         }
 
         let undoneAction = UIContextualAction(style: .normal, title: "Undone") { _, _, isDone in
             StorageManager.shared.undone(task)
             let rowIndex = IndexPath(
-                row: self.currentTasks.index(of: task) ?? SectionName.current,
-                section: SectionName.current
+                row: self.currentTasks.index(of: task) ?? Section.current,
+                section: Section.current
             )
             tableView.moveRow(at: indexPath, to: rowIndex)
-
             isDone(true)
         }
 
@@ -106,15 +108,11 @@ class TasksViewController: UITableViewController {
         doneAction.backgroundColor = #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1)
         undoneAction.backgroundColor = #colorLiteral(red: 0.9686274529, green: 0.78039217, blue: 0.3450980484, alpha: 1)
 
-        if indexPath.section == SectionName.current {
+        if indexPath.section == Section.current {
             return UISwipeActionsConfiguration(actions: [doneAction, editAction, deleteAction])
         } else {
             return UISwipeActionsConfiguration(actions: [undoneAction, editAction, deleteAction])
         }
-    }
-
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
     }
 }
 
@@ -140,8 +138,8 @@ extension TasksViewController {
         let task = Task(value: [name, note])
         StorageManager.shared.save(task, to: taskList)
         let rowIndex = IndexPath(
-            row: currentTasks.index(of: task) ?? SectionName.current,
-            section: SectionName.current
+            row: currentTasks.index(of: task) ?? Section.current,
+            section: Section.current
         )
         tableView.insertRows(at: [rowIndex], with: .automatic)
     }

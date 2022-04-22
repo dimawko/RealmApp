@@ -43,6 +43,10 @@ class TaskListViewController: UITableViewController {
         let taskList = taskLists[indexPath.row]
         content.text = taskList.name
         content.secondaryText = countUnCompletedTasks(for: taskList)
+        if content.secondaryText == String(0) {
+            content.secondaryText = ""
+            cell.accessoryType = .checkmark
+        }
         cell.contentConfiguration = content
         return cell
     }

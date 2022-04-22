@@ -79,13 +79,13 @@ class StorageManager {
 
     func done(_ task: Task) {
         write {
-            task.setValue(true, forKey: "isComplete")
+            task.isComplete = true
         }
     }
 
     func undone(_ task: Task) {
         write {
-            task.setValue(false, forKey: "isComplete")
+            task.isComplete = false
         }
     }
 

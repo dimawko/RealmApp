@@ -9,6 +9,11 @@
 import UIKit
 import RealmSwift
 
+private enum SectionName {
+    static let current = 0
+    static let completed = 1
+}
+
 class TasksViewController: UITableViewController {
 
     var taskList: TaskList!
@@ -36,11 +41,11 @@ class TasksViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        section == 0 ? currentTasks.count : completedTasks.count
+        section == SectionName.current ? currentTasks.count : completedTasks.count
     }
 
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        section == 0 ? "CURRENT TASKS" : "COMPLETED TASKS"
+        section == SectionName.current ? "CURRENT TASKS" : "COMPLETED TASKS"
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -58,7 +63,9 @@ class TasksViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let task = indexPath.section == 0 ? currentTasks[indexPath.row] : completedTasks[indexPath.row]
+        let task = indexPath.section == SectionName.current
+        ? currentTasks[indexPath.row]
+        : completedTasks[indexPath.row]
 
         let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { _, _, isDone in
             StorageManager.shared.delete(task, from: self.taskList)
@@ -75,7 +82,10 @@ class TasksViewController: UITableViewController {
 
         let doneAction = UIContextualAction(style: .normal, title: "Done") { _, _, isDone in
             StorageManager.shared.done(task)
-            let rowIndex = IndexPath(row: self.completedTasks.index(of: task) ?? 0, section: 1)
+            let rowIndex = IndexPath(
+                row: self.completedTasks.index(of: task) ?? SectionName.current,
+                section: SectionName.completed
+            )
             tableView.moveRow(at: indexPath, to: rowIndex)
 
             isDone(true)
@@ -83,7 +93,10 @@ class TasksViewController: UITableViewController {
 
         let undoneAction = UIContextualAction(style: .normal, title: "Undone") { _, _, isDone in
             StorageManager.shared.undone(task)
-            let rowIndex = IndexPath(row: self.currentTasks.index(of: task) ?? 0, section: 0)
+            let rowIndex = IndexPath(
+                row: self.currentTasks.index(of: task) ?? SectionName.current,
+                section: SectionName.current
+            )
             tableView.moveRow(at: indexPath, to: rowIndex)
 
             isDone(true)
@@ -93,7 +106,7 @@ class TasksViewController: UITableViewController {
         doneAction.backgroundColor = #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1)
         undoneAction.backgroundColor = #colorLiteral(red: 0.9686274529, green: 0.78039217, blue: 0.3450980484, alpha: 1)
 
-        if indexPath.section == 0 {
+        if indexPath.section == SectionName.current {
             return UISwipeActionsConfiguration(actions: [doneAction, editAction, deleteAction])
         } else {
             return UISwipeActionsConfiguration(actions: [undoneAction, editAction, deleteAction])
@@ -126,7 +139,10 @@ extension TasksViewController {
     private func saveTask(withName name: String, andNote note: String) {
         let task = Task(value: [name, note])
         StorageManager.shared.save(task, to: taskList)
-        let rowIndex = IndexPath(row: currentTasks.index(of: task) ?? 0, section: 0)
+        let rowIndex = IndexPath(
+            row: currentTasks.index(of: task) ?? SectionName.current,
+            section: SectionName.current
+        )
         tableView.insertRows(at: [rowIndex], with: .automatic)
     }
 }

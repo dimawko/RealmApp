@@ -12,11 +12,11 @@ import RealmSwift
 class TaskListViewController: UITableViewController {
 
     var taskLists: Results<TaskList>!
-
+    var sortedTaskLists: [TaskList] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        taskLists = StorageManager.shared.realm?.objects(TaskList.self)
+        taskLists = StorageManager.shared.realm?.objects(TaskList.self).sorted(byKeyPath: "date", ascending: true)
         createTempData()
         let addButton = UIBarButtonItem(
             barButtonSystemItem: .add,
@@ -44,7 +44,6 @@ class TaskListViewController: UITableViewController {
         let taskList = taskLists[indexPath.row]
         content.text = taskList.name
         let uncompletedTasks = countUnCompletedTasks(for: taskList)
-        print(uncompletedTasks)
         if uncompletedTasks > 0 {
             content.secondaryText = "\(uncompletedTasks)"
             cell.accessoryType = .none
@@ -93,6 +92,14 @@ class TaskListViewController: UITableViewController {
     }
 
     @IBAction func sortingList(_ sender: UISegmentedControl) {
+        var filteredTaskLists = taskLists
+        if sender.titleForSegment(at: sender.selectedSegmentIndex) == "A-Z" {
+            filteredTaskLists = taskLists.sorted(byKeyPath: "name", ascending: true)
+        } else {
+            filteredTaskLists = taskLists.sorted(byKeyPath: "date", ascending: true)
+        }
+        taskLists = filteredTaskLists
+        tableView.reloadData()
     }
 
     @objc private func addButtonPressed() {
@@ -115,7 +122,7 @@ class TaskListViewController: UITableViewController {
         return uncompletedTasksCount
     }
 }
-
+// MARK: - Alert controller
 extension TaskListViewController {
 
     private func showAlert(with taskList: TaskList? = nil, completion: (() -> Void)? = nil) {

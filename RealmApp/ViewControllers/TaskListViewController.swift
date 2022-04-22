@@ -13,6 +13,7 @@ class TaskListViewController: UITableViewController {
 
     var taskLists: Results<TaskList>!
 
+
     override func viewDidLoad() {
         super.viewDidLoad()
         taskLists = StorageManager.shared.realm?.objects(TaskList.self)
@@ -42,12 +43,16 @@ class TaskListViewController: UITableViewController {
         var content = cell.defaultContentConfiguration()
         let taskList = taskLists[indexPath.row]
         content.text = taskList.name
-        content.secondaryText = countUnCompletedTasks(for: taskList)
-        if content.secondaryText == String(0) {
-            content.secondaryText = ""
+        let uncompletedTasks = countUnCompletedTasks(for: taskList)
+        print(uncompletedTasks)
+        if uncompletedTasks > 0 {
+            content.secondaryText = "\(uncompletedTasks)"
+            cell.accessoryType = .none
+        } else {
             cell.accessoryType = .checkmark
         }
         cell.contentConfiguration = content
+
         return cell
     }
 
@@ -100,14 +105,14 @@ class TaskListViewController: UITableViewController {
         }
     }
 
-    private func countUnCompletedTasks(for taskList: TaskList) -> String {
+    private func countUnCompletedTasks(for taskList: TaskList) -> Int {
         var uncompletedTasksCount = 0
         taskList.tasks.forEach { task in
             if task.isComplete == false {
                 uncompletedTasksCount += 1
             }
         }
-        return String(uncompletedTasksCount)
+        return uncompletedTasksCount
     }
 }
 

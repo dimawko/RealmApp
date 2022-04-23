@@ -13,6 +13,16 @@ class TaskList: Object {
     @Persisted var name = ""
     @Persisted var date = Date()
     @Persisted var tasks = List<Task>()
+
+    static func countUncompletedTasks(for taskList: TaskList) -> Int {
+        var uncompletedTasksCount = 0
+        taskList.tasks.forEach { task in
+            if task.isComplete == false {
+                uncompletedTasksCount += 1
+            }
+        }
+        return uncompletedTasksCount
+    }
 }
 
 class Task: Object {

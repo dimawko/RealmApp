@@ -53,7 +53,7 @@ class TaskListViewController: UITableViewController {
         var content = cell.defaultContentConfiguration()
         content.text = taskList.name
 
-        let uncompletedTasks = countUncompletedTasks(for: taskList)
+        let uncompletedTasks = TaskList.countUncompletedTasks(for: taskList)
         if uncompletedTasks > 0 {
             content.secondaryText = "\(uncompletedTasks)"
             cell.accessoryType = .none
@@ -118,7 +118,7 @@ class TaskListViewController: UITableViewController {
         showAlert()
     }
 }
-// MARK: - Alert controller
+// MARK: - Private methods
 private extension TaskListViewController {
     func showAlert(with taskList: TaskList? = nil, completion: (() -> Void)? = nil) {
         let title = taskList != nil ? Alert.Title.editList : Alert.Title.newList
@@ -141,19 +141,6 @@ private extension TaskListViewController {
         StorageManager.shared.save(taskList)
         let rowIndex = IndexPath(row: taskLists.index(of: taskList) ?? SectionIndex.current, section: SectionIndex.current)
         tableView.insertRows(at: [rowIndex], with: .automatic)
-    }
-}
-
-// MARK: - Private methods
-private extension TaskListViewController {
-    func countUncompletedTasks(for taskList: TaskList) -> Int {
-        var uncompletedTasksCount = 0
-        taskList.tasks.forEach { task in
-            if task.isComplete == false {
-                uncompletedTasksCount += 1
-            }
-        }
-        return uncompletedTasksCount
     }
 
     func createTempData() {

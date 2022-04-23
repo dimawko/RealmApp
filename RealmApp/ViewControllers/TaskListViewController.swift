@@ -9,14 +9,22 @@
 import UIKit
 import RealmSwift
 
+private enum SegmentIndex {
+    static let date = 0
+}
+
+private enum KeyPath {
+    static let date = "date"
+    static let name = "name"
+}
+
 class TaskListViewController: UITableViewController {
 
     var taskLists: Results<TaskList>!
-    var sortedTaskLists: [TaskList] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        taskLists = StorageManager.shared.realm?.objects(TaskList.self).sorted(byKeyPath: "date", ascending: true)
+        taskLists = StorageManager.shared.realm?.objects(TaskList.self)
         createTempData()
         let addButton = UIBarButtonItem(
             barButtonSystemItem: .add,
@@ -40,8 +48,9 @@ class TaskListViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TaskListCell", for: indexPath)
-        var content = cell.defaultContentConfiguration()
         let taskList = taskLists[indexPath.row]
+
+        var content = cell.defaultContentConfiguration()
         content.text = taskList.name
 
         let uncompletedTasks = countUncompletedTasks(for: taskList)
@@ -57,25 +66,27 @@ class TaskListViewController: UITableViewController {
         return cell
     }
 
-    // MARK: - Table View Data Source
+    // MARK: - Table view swipe actions
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let taskList = taskLists[indexPath.row]
 
-        let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { _, _, _ in
+        let deleteAction = UIContextualAction(style: .destructive, title: ActionName.delete) { _, _, _ in
             StorageManager.shared.delete(taskList)
             tableView.deleteRows(at: [indexPath], with: .automatic)
         }
 
-        let editAction = UIContextualAction(style: .normal, title: "Edit") { _, _, isDone in
+        let editAction = UIContextualAction(style: .normal, title: ActionName.edit) { _, _, isDone in
             self.showAlert(with: taskList) {
                 self.tableView.reloadRows(at: [indexPath], with: .automatic)
             }
+
             isDone(true)
         }
 
-        let doneAction = UIContextualAction(style: .normal, title: "Done") { _, _, isDone in
+        let doneAction = UIContextualAction(style: .normal, title: ActionName.done) { _, _, isDone in
             StorageManager.shared.done(taskList)
             tableView.reloadRows(at: [indexPath], with: .automatic)
+
             isDone(true)
         }
 
@@ -94,41 +105,23 @@ class TaskListViewController: UITableViewController {
     }
 
     @IBAction func sortingList(_ sender: UISegmentedControl) {
-        var filteredTaskLists = taskLists
-        if sender.titleForSegment(at: sender.selectedSegmentIndex) == "A-Z" {
-            filteredTaskLists = taskLists.sorted(byKeyPath: "name", ascending: true)
-        } else {
-            filteredTaskLists = taskLists.sorted(byKeyPath: "date", ascending: true)
+        switch sender.selectedSegmentIndex {
+        case SegmentIndex.date:
+            taskLists =  taskLists.sorted(byKeyPath: KeyPath.date, ascending: true)
+        default:
+            taskLists = taskLists.sorted(byKeyPath: KeyPath.name, ascending: true)
         }
-        taskLists = filteredTaskLists
         tableView.reloadData()
     }
 
     @objc private func addButtonPressed() {
         showAlert()
     }
-
-    private func createTempData() {
-        DataManager.shared.createTempData {
-            self.tableView.reloadData()
-        }
-    }
-
-    private func countUncompletedTasks(for taskList: TaskList) -> Int {
-        var uncompletedTasksCount = 0
-        taskList.tasks.forEach { task in
-            if task.isComplete == false {
-                uncompletedTasksCount += 1
-            }
-        }
-        return uncompletedTasksCount
-    }
 }
 // MARK: - Alert controller
-extension TaskListViewController {
-
-    private func showAlert(with taskList: TaskList? = nil, completion: (() -> Void)? = nil) {
-        let title = taskList != nil ? "Edit List" : "New List"
+private extension TaskListViewController {
+    func showAlert(with taskList: TaskList? = nil, completion: (() -> Void)? = nil) {
+        let title = taskList != nil ? Alert.Title.editList : Alert.Title.newList
         let alert = UIAlertController.createAlert(withTitle: title, andMessage: "Please set title for new task list")
 
         alert.action(with: taskList) { newValue in
@@ -143,10 +136,29 @@ extension TaskListViewController {
         present(alert, animated: true)
     }
 
-    private func save(taskList: String) {
+    func save(taskList: String) {
         let taskList = TaskList(value: [taskList])
         StorageManager.shared.save(taskList)
-        let rowIndex = IndexPath(row: taskLists.index(of: taskList) ?? 0, section: 0)
+        let rowIndex = IndexPath(row: taskLists.index(of: taskList) ?? SectionIndex.current, section: SectionIndex.current)
         tableView.insertRows(at: [rowIndex], with: .automatic)
+    }
+}
+
+// MARK: - Private methods
+private extension TaskListViewController {
+    func countUncompletedTasks(for taskList: TaskList) -> Int {
+        var uncompletedTasksCount = 0
+        taskList.tasks.forEach { task in
+            if task.isComplete == false {
+                uncompletedTasksCount += 1
+            }
+        }
+        return uncompletedTasksCount
+    }
+
+    func createTempData() {
+        DataManager.shared.createTempData {
+            self.tableView.reloadData()
+        }
     }
 }

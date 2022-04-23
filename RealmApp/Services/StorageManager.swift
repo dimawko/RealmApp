@@ -94,7 +94,7 @@ class StorageManager {
             try realm?.write {
                 completion()
             }
-        } catch {
+        } catch let error as NSError {
             print(error)
         }
     }

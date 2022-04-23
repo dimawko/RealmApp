@@ -16,7 +16,7 @@ extension UIAlertController {
 
     func action(with taskList: TaskList?, completion: @escaping (String) -> Void) {
 
-        let doneButton = taskList == nil ? "Save" : "Update"
+        let doneButton = taskList == nil ? Alert.ButtonTitle.save : Alert.ButtonTitle.update
 
         let saveAction = UIAlertAction(title: doneButton, style: .default) { _ in
             guard let newValue = self.textFields?.first?.text else { return }
@@ -24,19 +24,19 @@ extension UIAlertController {
             completion(newValue)
         }
 
-        let cancelAction = UIAlertAction(title: "Cancel", style: .destructive)
+        let cancelAction = UIAlertAction(title: Alert.Action.cancel, style: .destructive)
 
         addAction(saveAction)
         addAction(cancelAction)
         addTextField { textField in
-            textField.placeholder = "List Name"
+            textField.placeholder = Alert.PlaceHolderText.enterList
             textField.text = taskList?.name
         }
     }
 
     func action(with task: Task?, completion: @escaping (String, String) -> Void) {
 
-        let title = task == nil ? "Save" : "Update"
+        let title = task == nil ? Alert.ButtonTitle.save : Alert.ButtonTitle.update
 
         let saveAction = UIAlertAction(title: title, style: .default) { _ in
             guard let newTask = self.textFields?.first?.text else { return }
@@ -49,18 +49,18 @@ extension UIAlertController {
             }
         }
 
-        let cancelAction = UIAlertAction(title: "Cancel", style: .destructive)
+        let cancelAction = UIAlertAction(title: Alert.Action.cancel, style: .destructive)
 
         addAction(saveAction)
         addAction(cancelAction)
 
         addTextField { textField in
-            textField.placeholder = "New task"
+            textField.placeholder = Alert.PlaceHolderText.enterTask
             textField.text = task?.name
         }
 
         addTextField { textField in
-            textField.placeholder = "Note"
+            textField.placeholder = Alert.PlaceHolderText.enterNote
             textField.text = task?.note
         }
     }

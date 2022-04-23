@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -12,13 +12,13 @@
 		A804828827103BFD0095A493 /* TaskList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A804828727103BFD0095A493 /* TaskList.swift */; };
 		A85820E528115F94002AB612 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = A85820E428115F94002AB612 /* Realm */; };
 		A85820E728115F94002AB612 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = A85820E628115F94002AB612 /* RealmSwift */; };
-		A872A10F20E9D82400ECE2BA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A872A10E20E9D82400ECE2BA /* AppDelegate.swift */; };
-		A872A11420E9D82400ECE2BA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A872A11220E9D82400ECE2BA /* Main.storyboard */; };
-		A872A11620E9D82600ECE2BA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A872A11520E9D82600ECE2BA /* Assets.xcassets */; };
-		A872A11920E9D82600ECE2BA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A872A11720E9D82600ECE2BA /* LaunchScreen.storyboard */; };
 		A872A12120E9D87400ECE2BA /* TaskListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A872A12020E9D87400ECE2BA /* TaskListViewController.swift */; };
 		A872A12320E9D88E00ECE2BA /* TasksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A872A12220E9D88E00ECE2BA /* TasksViewController.swift */; };
 		A8E78FE9241A76EE00E66973 /* AlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E78FE8241A76EE00E66973 /* AlertController.swift */; };
+		C2A56378281440260047EB5D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A56376281440260047EB5D /* AppDelegate.swift */; };
+		C2A5637F281440300047EB5D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C2A5637B281440300047EB5D /* LaunchScreen.storyboard */; };
+		C2A56380281440300047EB5D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C2A5637D281440300047EB5D /* Main.storyboard */; };
+		C2A56383281440390047EB5D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C2A56382281440390047EB5D /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,14 +26,14 @@
 		A804828527103A100095A493 /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 		A804828727103BFD0095A493 /* TaskList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskList.swift; sourceTree = "<group>"; };
 		A872A10B20E9D82400ECE2BA /* RealmApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RealmApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		A872A10E20E9D82400ECE2BA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		A872A11320E9D82400ECE2BA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		A872A11520E9D82600ECE2BA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		A872A11820E9D82600ECE2BA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		A872A11A20E9D82600ECE2BA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A872A12020E9D87400ECE2BA /* TaskListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskListViewController.swift; sourceTree = "<group>"; };
 		A872A12220E9D88E00ECE2BA /* TasksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksViewController.swift; sourceTree = "<group>"; };
 		A8E78FE8241A76EE00E66973 /* AlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertController.swift; sourceTree = "<group>"; };
+		C2A56376281440260047EB5D /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		C2A56377281440260047EB5D /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C2A5637C281440300047EB5D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		C2A5637E281440300047EB5D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		C2A56382281440390047EB5D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,11 +81,9 @@
 				A81BC31C256FED21002D9595 /* ViewControllers */,
 				A8969B33270F34B700F7DED0 /* Models */,
 				A8969B34270F34C900F7DED0 /* Services */,
-				A872A10E20E9D82400ECE2BA /* AppDelegate.swift */,
-				A872A11220E9D82400ECE2BA /* Main.storyboard */,
-				A872A11520E9D82600ECE2BA /* Assets.xcassets */,
-				A872A11720E9D82600ECE2BA /* LaunchScreen.storyboard */,
-				A872A11A20E9D82600ECE2BA /* Info.plist */,
+				C2A56381281440380047EB5D /* Resources */,
+				C2A5637A281440300047EB5D /* Storyboards */,
+				C2A56375281440260047EB5D /* App */,
 			);
 			path = RealmApp;
 			sourceTree = "<group>";
@@ -107,6 +105,34 @@
 			path = Services;
 			sourceTree = "<group>";
 		};
+		C2A56375281440260047EB5D /* App */ = {
+			isa = PBXGroup;
+			children = (
+				C2A56376281440260047EB5D /* AppDelegate.swift */,
+				C2A56377281440260047EB5D /* Info.plist */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		C2A5637A281440300047EB5D /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				C2A5637B281440300047EB5D /* LaunchScreen.storyboard */,
+				C2A5637D281440300047EB5D /* Main.storyboard */,
+			);
+			name = Storyboards;
+			path = RealmApp/Storyboards;
+			sourceTree = SOURCE_ROOT;
+		};
+		C2A56381281440380047EB5D /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				C2A56382281440390047EB5D /* Assets.xcassets */,
+			);
+			name = Resources;
+			path = RealmApp/Resources;
+			sourceTree = SOURCE_ROOT;
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -114,6 +140,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = A872A11D20E9D82600ECE2BA /* Build configuration list for PBXNativeTarget "RealmApp" */;
 			buildPhases = (
+				C2A56384281442B70047EB5D /* ShellScript */,
 				A872A10720E9D82400ECE2BA /* Sources */,
 				A872A10820E9D82400ECE2BA /* Frameworks */,
 				A872A10920E9D82400ECE2BA /* Resources */,
@@ -173,13 +200,34 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A872A11920E9D82600ECE2BA /* LaunchScreen.storyboard in Resources */,
-				A872A11620E9D82600ECE2BA /* Assets.xcassets in Resources */,
-				A872A11420E9D82400ECE2BA /* Main.storyboard in Resources */,
+				C2A56380281440300047EB5D /* Main.storyboard in Resources */,
+				C2A5637F281440300047EB5D /* LaunchScreen.storyboard in Resources */,
+				C2A56383281440390047EB5D /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		C2A56384281442B70047EB5D /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export PATH=\"$PATH:/opt/homebrew/bin\"\nif which swiftlint > /dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		A872A10720E9D82400ECE2BA /* Sources */ = {
@@ -189,8 +237,8 @@
 				A804828827103BFD0095A493 /* TaskList.swift in Sources */,
 				A8E78FE9241A76EE00E66973 /* AlertController.swift in Sources */,
 				A804828427103A010095A493 /* DataManager.swift in Sources */,
-				A872A10F20E9D82400ECE2BA /* AppDelegate.swift in Sources */,
 				A804828627103A100095A493 /* StorageManager.swift in Sources */,
+				C2A56378281440260047EB5D /* AppDelegate.swift in Sources */,
 				A872A12120E9D87400ECE2BA /* TaskListViewController.swift in Sources */,
 				A872A12320E9D88E00ECE2BA /* TasksViewController.swift in Sources */,
 			);
@@ -199,20 +247,20 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		A872A11220E9D82400ECE2BA /* Main.storyboard */ = {
+		C2A5637B281440300047EB5D /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				A872A11320E9D82400ECE2BA /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		A872A11720E9D82600ECE2BA /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				A872A11820E9D82600ECE2BA /* Base */,
+				C2A5637C281440300047EB5D /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		C2A5637D281440300047EB5D /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C2A5637E281440300047EB5D /* Base */,
+			);
+			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -339,7 +387,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = RealmApp/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/RealmApp/App/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -357,7 +405,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = RealmApp/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/RealmApp/App/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

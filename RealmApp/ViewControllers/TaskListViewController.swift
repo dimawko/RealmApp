@@ -54,7 +54,8 @@ class TaskListViewController: UITableViewController {
         content.text = taskList.name
 
         let uncompletedTasks = TaskList.countUncompletedTasks(for: taskList)
-        if uncompletedTasks > 0 {
+
+        if uncompletedTasks > 0 || taskList.tasks.isEmpty == true {
             content.secondaryText = "\(uncompletedTasks)"
             cell.accessoryType = .none
         } else {
@@ -70,9 +71,11 @@ class TaskListViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let taskList = taskLists[indexPath.row]
 
-        let deleteAction = UIContextualAction(style: .destructive, title: ActionName.delete) { _, _, _ in
+        let deleteAction = UIContextualAction(style: .destructive, title: ActionName.delete) { _, _, isDone in
             StorageManager.shared.delete(taskList)
             tableView.deleteRows(at: [indexPath], with: .automatic)
+
+            isDone(true)
         }
 
         let editAction = UIContextualAction(style: .normal, title: ActionName.edit) { _, _, isDone in

@@ -77,15 +77,9 @@ class StorageManager {
         }
     }
 
-    func done(_ task: Task) {
+    func isDone(_ task: Task) {
         write {
-            task.isComplete = true
-        }
-    }
-
-    func undone(_ task: Task) {
-        write {
-            task.isComplete = false
+            task.isComplete.toggle()
         }
     }
 

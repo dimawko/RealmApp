@@ -77,42 +77,37 @@ class TasksViewController: UITableViewController {
             self.showAlert(with: task) {
                 tableView.reloadRows(at: [indexPath], with: .automatic)
 
-                isDone(true)
             }
-        }
-
-        let doneAction = UIContextualAction(style: .normal, title: ActionName.done) { _, _, isDone in
-            StorageManager.shared.done(task)
-            let rowIndex = IndexPath(
-                row: self.completedTasks.index(of: task) ?? SectionIndex.current,
-                section: SectionIndex.completed
-            )
-            tableView.moveRow(at: indexPath, to: rowIndex)
-
             isDone(true)
         }
 
-        let undoneAction = UIContextualAction(style: .normal, title: ActionName.undone) { _, _, isDone in
-            StorageManager.shared.undone(task)
-            let rowIndex = IndexPath(
+        var doneActionTitle: String
+        var rowIndex: IndexPath
+
+        if indexPath.section == SectionIndex.current {
+            doneActionTitle = ActionName.done
+            rowIndex = IndexPath(
+                row: self.completedTasks.index(of: task) ?? SectionIndex.current,
+                section: SectionIndex.completed
+            )
+        } else {
+            doneActionTitle = ActionName.undone
+            rowIndex = IndexPath(
                 row: self.currentTasks.index(of: task) ?? SectionIndex.current,
                 section: SectionIndex.current
             )
-            tableView.moveRow(at: indexPath, to: rowIndex)
+        }
 
+        let doneAction = UIContextualAction(style: .normal, title: doneActionTitle) { _, _, isDone in
+            StorageManager.shared.isDone(task)
+            tableView.moveRow(at: indexPath, to: rowIndex)
             isDone(true)
         }
 
         editAction.backgroundColor = .orange
         doneAction.backgroundColor = #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1)
-        undoneAction.backgroundColor = #colorLiteral(red: 0.9686274529, green: 0.78039217, blue: 0.3450980484, alpha: 1)
 
-        switch indexPath.section {
-        case SectionIndex.current:
-            return UISwipeActionsConfiguration(actions: [doneAction, editAction, deleteAction])
-        default:
-            return UISwipeActionsConfiguration(actions: [undoneAction, editAction, deleteAction])
-        }
+        return UISwipeActionsConfiguration(actions: [doneAction, editAction, deleteAction])
     }
 }
 

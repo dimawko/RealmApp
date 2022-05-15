@@ -1,5 +1,5 @@
 # RealmApp
-Realm framework practice project.
+Simple ToDoList app.
 # Stack
 - Realm
 - CocoaPods
